@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
 function About({ setIsAuthenticated }) {
-  const navigate = useNavigate();
-
   return (
     <div style={{
       minHeight: '100vh',

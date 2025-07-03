@@ -10,10 +10,6 @@ function ContactSubmissions({ setIsAuthenticated }) {
   const [replyingId, setReplyingId] = useState(null);
   const [replyText, setReplyText] = useState('');
 
-  useEffect(() => {
-    fetchContacts();
-  }, [fetchContacts]);
-
   const fetchContacts = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -33,6 +29,10 @@ function ContactSubmissions({ setIsAuthenticated }) {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchContacts();
+  }, []);
 
   const markAsRead = async (id) => {
     try {

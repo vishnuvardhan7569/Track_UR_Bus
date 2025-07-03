@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const LOGO_SRC = '/travel.png';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 function Dashboard({ setIsAuthenticated }) {
   const [data, setData] = useState(null);
@@ -17,7 +18,7 @@ function Dashboard({ setIsAuthenticated }) {
         return;
       }
       try {
-        const res = await axios.get('http://localhost:5000/api/protected/dashboard-data', {
+        const res = await axios.get(`${API_BASE_URL}/protected/dashboard-data`, {
           headers: {
             Authorization: `Bearer ${token}`,
           }

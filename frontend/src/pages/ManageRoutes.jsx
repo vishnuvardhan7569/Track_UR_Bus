@@ -15,6 +15,8 @@ function ManageRoutes({ setIsAuthenticated }) {
     arrivalTime: ''
   });
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
   useEffect(() => {
     fetchBuses();
   }, []);
@@ -22,7 +24,7 @@ function ManageRoutes({ setIsAuthenticated }) {
   const fetchBuses = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/buses/all', {
+      const response = await axios.get(`${API_BASE_URL}/buses/all`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setBuses(response.data);
@@ -54,7 +56,7 @@ function ManageRoutes({ setIsAuthenticated }) {
         stops: stopsArray
       };
 
-      await axios.put(`http://localhost:5000/api/buses/update/${editingBus.busNumber}`, updateData, {
+      await axios.put(`${API_BASE_URL}/buses/update/${editingBus.busNumber}`, updateData, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -70,7 +72,7 @@ function ManageRoutes({ setIsAuthenticated }) {
     if (window.confirm('Are you sure you want to delete this bus route?')) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:5000/api/buses/delete/${busNumber}`, {
+        await axios.delete(`${API_BASE_URL}/buses/delete/${busNumber}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         alert('Bus route deleted successfully!');

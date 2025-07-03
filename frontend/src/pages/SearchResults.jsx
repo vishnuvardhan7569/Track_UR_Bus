@@ -4,6 +4,8 @@ import BusMap from '../components/BusMap';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
 function SearchResults({ setIsAuthenticated }) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,7 +27,7 @@ function SearchResults({ setIsAuthenticated }) {
     let intervalId;
     const fetchLiveBus = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/buses/search/vehicle?busNumber=${selectedBus.busNumber}`);
+        const response = await axios.get(`${API_BASE_URL}/buses/search/vehicle?busNumber=${selectedBus.busNumber}`);
         if (response.data && response.data.length > 0) {
           setLiveBus(response.data[0]);
         }

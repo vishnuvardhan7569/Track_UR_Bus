@@ -14,6 +14,8 @@ function Contact({ setIsAuthenticated }) {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -28,7 +30,7 @@ function Contact({ setIsAuthenticated }) {
     setSuccess('');
 
     try {
-      await axios.post('http://localhost:5000/api/contact/submit', formData);
+      await axios.post(`${API_BASE_URL}/contact/submit`, formData);
       setSuccess('Thank you for your message! We will get back to you soon.');
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err) {

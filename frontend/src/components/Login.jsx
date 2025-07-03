@@ -13,13 +13,15 @@ function Login({ setIsAuthenticated }) {
 
   const navigate = useNavigate();
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMsg('');
     setLoading(true);
 
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', {
+      const res = await axios.post(`${API_BASE_URL}/auth/login`, {
         email,
         password,
         role

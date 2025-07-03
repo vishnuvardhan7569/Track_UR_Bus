@@ -13,6 +13,8 @@ function Notifications({ setIsAuthenticated }) {
     message: ''
   });
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -22,13 +24,13 @@ function Notifications({ setIsAuthenticated }) {
       const token = localStorage.getItem('token');
       
       // Fetch notifications
-      const notificationsResponse = await axios.get('http://localhost:5000/api/notifications', {
+      const notificationsResponse = await axios.get(`${API_BASE_URL}/notifications`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setNotifications(notificationsResponse.data);
 
       // Fetch buses for dropdown
-      const busesResponse = await axios.get('http://localhost:5000/api/buses/all', {
+      const busesResponse = await axios.get(`${API_BASE_URL}/buses/all`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setBuses(busesResponse.data);
@@ -50,7 +52,7 @@ function Notifications({ setIsAuthenticated }) {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/notifications', newNotification, {
+      await axios.post(`${API_BASE_URL}/notifications`, newNotification, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -67,7 +69,7 @@ function Notifications({ setIsAuthenticated }) {
     if (window.confirm('Are you sure you want to delete this notification?')) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:5000/api/notifications/${id}`, {
+        await axios.delete(`${API_BASE_URL}/notifications/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         alert('Notification deleted successfully!');

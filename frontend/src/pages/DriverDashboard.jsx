@@ -19,13 +19,15 @@ function DriverDashboard() {
   // Simulate getting driver info from localStorage or auth
   const driverId = localStorage.getItem('userId') || 'driver-demo';
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
   useEffect(() => {
     // Fetch all buses for dropdown
     fetchAllBusesForDropdown().then(setBuses);
     // Fetch driver details
     const fetchDriver = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/protected/dashboard-data', {
+        const res = await axios.get(`${API_BASE_URL}/protected/dashboard-data`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         setDriverDetails(res.data);
@@ -42,7 +44,7 @@ function DriverDashboard() {
     if (tracking && busNumber) {
       const poll = async () => {
         try {
-          const res = await axios.get(`http://localhost:5000/api/buses/search/vehicle?busNumber=${busNumber}`);
+          const res = await axios.get(`${API_BASE_URL}/buses/search/vehicle?busNumber=${busNumber}`);
           if (res.data && res.data[0] && res.data[0].currentLocation) {
             setCurrentLocation(res.data[0].currentLocation);
           }
@@ -69,7 +71,7 @@ function DriverDashboard() {
       async (pos) => {
         const { latitude, longitude } = pos.coords;
         try {
-          await axios.put('http://localhost:5000/api/buses/update-location', {
+          await axios.put(`${API_BASE_URL}/buses/update-location`, {
             busNumber,
             lat: latitude,
             lng: longitude,
@@ -116,7 +118,7 @@ function DriverDashboard() {
     try {
       const payload = { name: editForm.name, email: editForm.email };
       if (editForm.password) payload.password = editForm.password;
-      const res = await axios.put(`http://localhost:5000/api/protected/update-user/${driverId}`, payload, {
+      const res = await axios.put(`${API_BASE_URL}/protected/update-user/${driverId}`, payload, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setDriverDetails(res.data.user);

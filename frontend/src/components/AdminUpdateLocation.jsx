@@ -7,9 +7,11 @@ function AdminUpdateLocation() {
   const [lng, setLng] = useState('');
   const [msg, setMsg] = useState('');
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
   const handleUpdate = async () => {
     try {
-      const res = await axios.put('http://localhost:5000/api/buses/update-location', {
+      const res = await axios.put(`${API_BASE_URL}/buses/update-location`, {
         busNumber,
         lat: parseFloat(lat),
         lng: parseFloat(lng),

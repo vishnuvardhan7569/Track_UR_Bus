@@ -10,6 +10,8 @@ function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -20,7 +22,7 @@ function Signup() {
     setSuccessMsg('');
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/register', form);
+      const res = await axios.post(`${API_BASE_URL}/auth/register`, form);
       if (res.data.msg?.includes('admin approval')) {
         localStorage.setItem('pendingEmail', form.email);
         localStorage.setItem('userName', form.name);

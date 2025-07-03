@@ -18,6 +18,8 @@ function AddBus({ setIsAuthenticated }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -43,7 +45,7 @@ function AddBus({ setIsAuthenticated }) {
         }
       };
 
-      await axios.post('http://localhost:5000/api/buses/add-bus', busData, {
+      await axios.post(`${API_BASE_URL}/buses/add-bus`, busData, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

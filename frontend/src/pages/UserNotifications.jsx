@@ -7,6 +7,8 @@ function UserNotifications({ setIsAuthenticated }) {
   const [selectedBus, setSelectedBus] = useState('');
   const [loading, setLoading] = useState(true);
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -16,13 +18,13 @@ function UserNotifications({ setIsAuthenticated }) {
       const token = localStorage.getItem('token');
       
       // Fetch all buses for dropdown
-      const busesResponse = await axios.get('http://localhost:5000/api/buses/all', {
+      const busesResponse = await axios.get(`${API_BASE_URL}/buses/all`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setBuses(busesResponse.data);
 
       // Fetch all notifications (for demo purposes)
-      const notificationsResponse = await axios.get('http://localhost:5000/api/notifications', {
+      const notificationsResponse = await axios.get(`${API_BASE_URL}/notifications`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setNotifications(notificationsResponse.data);
@@ -38,7 +40,7 @@ function UserNotifications({ setIsAuthenticated }) {
     
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:5000/api/notifications/bus/${busNumber}`, {
+      const response = await axios.get(`${API_BASE_URL}/notifications/bus/${busNumber}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setNotifications(response.data);

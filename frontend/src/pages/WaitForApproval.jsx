@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const LOGO_SRC = '/travel.png';
 const ESTIMATED_WAIT = 10; // minutes
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 export default function WaitForApproval() {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ export default function WaitForApproval() {
       }
       redirectTimeout.current = setTimeout(() => {
         localStorage.removeItem('pendingEmail');
-        fetch(`http://localhost:5000/api/auth/check-status?email=${encodeURIComponent(email)}`)
+        fetch(`${API_BASE_URL}/auth/check-status?email=${encodeURIComponent(email)}`)
           .then(res => res.json())
           .then(data => {
             if (data.role === 'driver') navigate('/driver/dashboard');
@@ -61,7 +62,7 @@ export default function WaitForApproval() {
           navigate('/login');
           return;
         }
-        const res = await fetch(`http://localhost:5000/api/auth/check-status?email=${encodeURIComponent(email)}`);
+        const res = await fetch(`${API_BASE_URL}/auth/check-status?email=${encodeURIComponent(email)}`);
         if (res.ok) {
           const data = await res.json();
           if (data.status === 'approved') {

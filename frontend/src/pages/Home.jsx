@@ -23,16 +23,18 @@ function Home({ setIsAuthenticated }) {
   const textColor = '#222';
   const accentColor = '#1976d2';
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
   const handleSearch = async (type) => {
     setLoading(true);
     try {
       let res;
       if (type === 'vehicle') {
-        res = await axios.get(`http://localhost:5000/api/buses/search/vehicle?busNumber=${vehicleNumber}`);
+        res = await axios.get(`${API_BASE_URL}/buses/search/vehicle?busNumber=${vehicleNumber}`);
       } else if (type === 'route') {
-        res = await axios.get(`http://localhost:5000/api/buses/search/route?routeNumber=${routeNumber}`);
+        res = await axios.get(`${API_BASE_URL}/buses/search/route?routeNumber=${routeNumber}`);
       } else if (type === 'source-destination') {
-        res = await axios.get(`http://localhost:5000/api/buses/search/source-destination?source=${source}&destination=${destination}`);
+        res = await axios.get(`${API_BASE_URL}/buses/search/source-destination?source=${source}&destination=${destination}`);
       } else if (type === 'stop') {
         const data = await searchBusesByStop(stop);
         res = { data };

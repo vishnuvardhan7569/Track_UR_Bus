@@ -27,6 +27,8 @@ function AdminDashboard({ setIsAuthenticated }) {
 
   const isMobile = window.innerWidth <= 600;
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
   useEffect(() => {
     fetchBuses();
     fetchPendingUsers();
@@ -53,7 +55,7 @@ function AdminDashboard({ setIsAuthenticated }) {
   const fetchBuses = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/buses/all', {
+      const response = await axios.get(`${API_BASE_URL}/buses/all`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setBuses(response.data);
@@ -69,7 +71,7 @@ function AdminDashboard({ setIsAuthenticated }) {
     setPendingError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/protected/pending-users', {
+      const res = await axios.get(`${API_BASE_URL}/protected/pending-users`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPendingUsers(res.data);
@@ -85,7 +87,7 @@ function AdminDashboard({ setIsAuthenticated }) {
     setUsersError('');
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/protected/users', {
+      const res = await axios.get(`${API_BASE_URL}/protected/users`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAllUsers(res.data);
@@ -99,7 +101,7 @@ function AdminDashboard({ setIsAuthenticated }) {
   const updateBusLocation = async (busNumber, lat, lng) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put('http://localhost:5000/api/buses/update-location', {
+      await axios.put(`${API_BASE_URL}/buses/update-location`, {
         busNumber,
         lat,
         lng
@@ -135,7 +137,7 @@ function AdminDashboard({ setIsAuthenticated }) {
       const token = localStorage.getItem('token');
       const newStatus = currentStatus === 'on_time' ? 'delayed' : 'on_time';
       
-      await axios.put(`http://localhost:5000/api/buses/update/${busNumber}`, {
+      await axios.put(`${API_BASE_URL}/buses/update/${busNumber}`, {
         status: newStatus
       }, {
         headers: { Authorization: `Bearer ${token}` }
@@ -187,7 +189,7 @@ function AdminDashboard({ setIsAuthenticated }) {
   const handleApprove = async (userId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/protected/approve-user/${userId}`, { note: pendingNotes[userId] || '' }, {
+      await axios.put(`${API_BASE_URL}/protected/approve-user/${userId}`, { note: pendingNotes[userId] || '' }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchPendingUsers();
@@ -201,7 +203,7 @@ function AdminDashboard({ setIsAuthenticated }) {
   const handleReject = async (userId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/protected/reject-user/${userId}`, { note: pendingNotes[userId] || '' }, {
+      await axios.put(`${API_BASE_URL}/protected/reject-user/${userId}`, { note: pendingNotes[userId] || '' }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchPendingUsers();
@@ -242,7 +244,7 @@ function AdminDashboard({ setIsAuthenticated }) {
   const handleEditUserSave = async (userId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/protected/update-user/${userId}`,
+      await axios.put(`${API_BASE_URL}/protected/update-user/${userId}`,
         { ...editUserForm },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -257,7 +259,7 @@ function AdminDashboard({ setIsAuthenticated }) {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/protected/delete-user/${userId}`, {
+      await axios.delete(`${API_BASE_URL}/protected/delete-user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchAllUsers();

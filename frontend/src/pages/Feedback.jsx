@@ -5,6 +5,8 @@ function Feedback() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -13,7 +15,7 @@ function Feedback() {
     e.preventDefault();
     setError('');
     try {
-      const res = await fetch('http://localhost:5000/api/feedback', {
+      const res = await fetch(`${API_BASE_URL}/feedback`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

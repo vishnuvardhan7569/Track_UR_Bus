@@ -29,28 +29,21 @@ function AdminDashboard({ setIsAuthenticated }) {
 
   const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
-  useEffect(() => {
-    fetchBuses();
-    fetchPendingUsers();
-    fetchAllUsers();
-    // Set up real-time updates every 30 seconds
-    const interval = setInterval(() => {
-      fetchBuses();
-      fetchPendingUsers();
-      fetchAllUsers();
-    }, 30000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Update location form when selected bus changes
-  useEffect(() => {
-    if (selectedBus && selectedBus.currentLocation) {
-      setLocationForm({
-        lat: selectedBus.currentLocation.lat?.toString() || '',
-        lng: selectedBus.currentLocation.lng?.toString() || ''
+  const fetchAllUsers = async () => {
+    setUsersLoading(true);
+    setUsersError('');
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.get(`${API_BASE_URL}/protected/users`, {
+        headers: { Authorization: `Bearer ${token}` }
       });
+      setAllUsers(res.data);
+    } catch (err) {
+      setUsersError('Error fetching users');
+    } finally {
+      setUsersLoading(false);
     }
-  }, [selectedBus]);
+  };
 
   const fetchBuses = async () => {
     try {
@@ -82,21 +75,28 @@ function AdminDashboard({ setIsAuthenticated }) {
     }
   };
 
-  const fetchAllUsers = async () => {
-    setUsersLoading(true);
-    setUsersError('');
-    try {
-      const token = localStorage.getItem('token');
-      const res = await axios.get(`${API_BASE_URL}/protected/users`, {
-        headers: { Authorization: `Bearer ${token}` }
+  useEffect(() => {
+    fetchAllUsers();
+    fetchBuses();
+    fetchPendingUsers();
+    // Set up real-time updates every 30 seconds
+    const interval = setInterval(() => {
+      fetchBuses();
+      fetchPendingUsers();
+      fetchAllUsers();
+    }, 30000);
+    return () => clearInterval(interval);
+  }, [fetchAllUsers, fetchBuses, fetchPendingUsers]);
+
+  // Update location form when selected bus changes
+  useEffect(() => {
+    if (selectedBus && selectedBus.currentLocation) {
+      setLocationForm({
+        lat: selectedBus.currentLocation.lat?.toString() || '',
+        lng: selectedBus.currentLocation.lng?.toString() || ''
       });
-      setAllUsers(res.data);
-    } catch (err) {
-      setUsersError('Error fetching users');
-    } finally {
-      setUsersLoading(false);
     }
-  };
+  }, [selectedBus]);
 
   const updateBusLocation = async (busNumber, lat, lng) => {
     try {

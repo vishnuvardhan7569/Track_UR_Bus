@@ -7,10 +7,6 @@ function AdminFeedback() {
 
   const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
-  useEffect(() => {
-    fetchFeedbacks();
-  }, [fetchFeedbacks]);
-
   const fetchFeedbacks = async () => {
     try {
       const res = await fetch(`${API_BASE_URL}/feedback`);
@@ -23,6 +19,10 @@ function AdminFeedback() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchFeedbacks();
+  }, [fetchFeedbacks]);
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this feedback?')) return;

@@ -17,10 +17,6 @@ function ManageRoutes({ setIsAuthenticated }) {
 
   const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
-  useEffect(() => {
-    fetchBuses();
-  }, [fetchBuses]);
-
   const fetchBuses = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -34,6 +30,10 @@ function ManageRoutes({ setIsAuthenticated }) {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchBuses();
+  }, [fetchBuses]);
 
   const handleEdit = (bus) => {
     setEditingBus(bus);

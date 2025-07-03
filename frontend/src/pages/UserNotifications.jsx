@@ -9,10 +9,6 @@ function UserNotifications({ setIsAuthenticated }) {
 
   const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -34,6 +30,10 @@ function UserNotifications({ setIsAuthenticated }) {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const fetchBusNotifications = async (busNumber) => {
     if (!busNumber) return;

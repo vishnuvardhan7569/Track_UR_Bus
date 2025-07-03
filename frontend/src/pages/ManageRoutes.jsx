@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,7 +17,7 @@ function ManageRoutes({ setIsAuthenticated }) {
 
   const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
-  const fetchBuses = async () => {
+  const fetchBuses = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get(`${API_BASE_URL}/buses/all`, {
@@ -29,7 +29,7 @@ function ManageRoutes({ setIsAuthenticated }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API_BASE_URL]);
 
   useEffect(() => {
     fetchBuses();

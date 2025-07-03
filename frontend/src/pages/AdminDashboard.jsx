@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import BusMap from '../components/BusMap';
@@ -29,7 +29,7 @@ function AdminDashboard({ setIsAuthenticated }) {
 
   const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
-  const fetchAllUsers = async () => {
+  const fetchAllUsers = useCallback(async () => {
     setUsersLoading(true);
     setUsersError('');
     try {
@@ -43,9 +43,9 @@ function AdminDashboard({ setIsAuthenticated }) {
     } finally {
       setUsersLoading(false);
     }
-  };
+  }, [API_BASE_URL]);
 
-  const fetchBuses = async () => {
+  const fetchBuses = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get(`${API_BASE_URL}/buses/all`, {
@@ -57,9 +57,9 @@ function AdminDashboard({ setIsAuthenticated }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API_BASE_URL]);
 
-  const fetchPendingUsers = async () => {
+  const fetchPendingUsers = useCallback(async () => {
     setPendingLoading(true);
     setPendingError('');
     try {
@@ -73,7 +73,7 @@ function AdminDashboard({ setIsAuthenticated }) {
     } finally {
       setPendingLoading(false);
     }
-  };
+  }, [API_BASE_URL]);
 
   useEffect(() => {
     fetchAllUsers();

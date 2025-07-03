@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 function AdminFeedback() {
   const [feedbacks, setFeedbacks] = useState([]);
@@ -7,7 +7,7 @@ function AdminFeedback() {
 
   const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
-  const fetchFeedbacks = async () => {
+  const fetchFeedbacks = useCallback(async () => {
     try {
       const res = await fetch(`${API_BASE_URL}/feedback`);
       if (!res.ok) throw new Error('Failed to fetch feedback');
@@ -18,7 +18,7 @@ function AdminFeedback() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API_BASE_URL]);
 
   useEffect(() => {
     fetchFeedbacks();

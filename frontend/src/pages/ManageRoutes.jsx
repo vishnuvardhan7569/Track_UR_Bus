@@ -19,7 +19,7 @@ function ManageRoutes({ setIsAuthenticated }) {
 
   useEffect(() => {
     fetchBuses();
-  }, []);
+  }, [fetchBuses]);
 
   const fetchBuses = async () => {
     try {

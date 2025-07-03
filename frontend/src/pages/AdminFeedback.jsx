@@ -9,7 +9,7 @@ function AdminFeedback() {
 
   useEffect(() => {
     fetchFeedbacks();
-  }, []);
+  }, [fetchFeedbacks]);
 
   const fetchFeedbacks = async () => {
     try {

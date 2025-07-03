@@ -11,7 +11,7 @@ function UserNotifications({ setIsAuthenticated }) {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const fetchData = async () => {
     try {

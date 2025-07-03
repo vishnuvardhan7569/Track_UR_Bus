@@ -37,7 +37,7 @@ function DriverDashboard() {
       }
     };
     fetchDriver();
-  }, []);
+  }, [API_BASE_URL]);
 
   useEffect(() => {
     // Poll bus location while tracking
@@ -54,7 +54,7 @@ function DriverDashboard() {
       pollInterval.current = setInterval(poll, 10000);
       return () => clearInterval(pollInterval.current);
     }
-  }, [tracking, busNumber]);
+  }, [tracking, busNumber, API_BASE_URL]);
 
   const startTracking = () => {
     if (!busNumber) {

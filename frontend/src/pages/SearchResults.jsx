@@ -46,12 +46,6 @@ function SearchResults({ setIsAuthenticated }) {
     navigate('/dashboard');
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    if (setIsAuthenticated) setIsAuthenticated(false);
-    navigate('/login', { replace: true });
-  };
-
   const getStatusColor = (status) => {
     return status === 'on_time' ? '#28a745' : '#dc3545';
   };

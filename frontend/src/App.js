@@ -4,7 +4,6 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import AdminNavbar from './components/AdminNavbar';
 import AdminLayout from './components/AdminLayout';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';

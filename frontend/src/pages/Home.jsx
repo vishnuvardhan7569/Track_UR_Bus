@@ -50,16 +50,6 @@ function Home({ setIsAuthenticated }) {
     navigate('/dashboard');
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    if (setIsAuthenticated) setIsAuthenticated(false);
-    navigate('/login', { replace: true });
-  };
-
-  const handleNotifications = () => {
-    navigate('/notifications');
-  };
-
   const handleContact = () => {
     navigate('/contact');
   };

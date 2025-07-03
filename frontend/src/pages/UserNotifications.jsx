@@ -59,12 +59,6 @@ function UserNotifications({ setIsAuthenticated }) {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    if (setIsAuthenticated) setIsAuthenticated(false);
-    navigate('/login', { replace: true });
-  };
-
   // Get user email from localStorage
   const userEmail = localStorage.getItem('userEmail');
   // Separate contact-reply notifications for this user

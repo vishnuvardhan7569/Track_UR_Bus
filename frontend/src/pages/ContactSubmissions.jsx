@@ -10,26 +10,27 @@ function ContactSubmissions({ setIsAuthenticated }) {
   const [replyingId, setReplyingId] = useState(null);
   const [replyText, setReplyText] = useState('');
 
-  useEffect(() => {
-    const fetchContacts = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/contact/all', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setContacts(response.data);
-      } catch (err) {
-        if (err.response?.status === 401) {
-          localStorage.removeItem('token');
-          if (setIsAuthenticated) setIsAuthenticated(false);
-          navigate('/login', { replace: true });
-        } else {
-          setError('Error fetching contact submissions');
-        }
-      } finally {
-        setLoading(false);
+  const fetchContacts = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://localhost:5000/api/contact/all', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setContacts(response.data);
+    } catch (err) {
+      if (err.response?.status === 401) {
+        localStorage.removeItem('token');
+        if (setIsAuthenticated) setIsAuthenticated(false);
+        navigate('/login', { replace: true });
+      } else {
+        setError('Error fetching contact submissions');
       }
-    };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchContacts();
   }, []);
 

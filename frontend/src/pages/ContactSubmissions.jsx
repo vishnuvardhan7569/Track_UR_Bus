@@ -32,7 +32,7 @@ function ContactSubmissions({ setIsAuthenticated }) {
 
   useEffect(() => {
     fetchContacts();
-  }, []);
+  }, [fetchContacts]);
 
   const markAsRead = async (id) => {
     try {

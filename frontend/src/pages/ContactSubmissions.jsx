@@ -30,9 +30,10 @@ function ContactSubmissions({ setIsAuthenticated }) {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchContacts();
-  }, [fetchContacts]);
+  }, []);
 
   const markAsRead = async (id) => {
     try {

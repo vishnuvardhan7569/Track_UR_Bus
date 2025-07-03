@@ -99,7 +99,7 @@ function AdminDashboard({ setIsAuthenticated }) {
   const updateBusLocation = async (busNumber, lat, lng) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.put('http://localhost:5000/api/buses/update-location', {
+      await axios.put('http://localhost:5000/api/buses/update-location', {
         busNumber,
         lat,
         lng

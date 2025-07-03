@@ -12,7 +12,7 @@ function ContactSubmissions({ setIsAuthenticated }) {
 
   useEffect(() => {
     fetchContacts();
-  }, []);
+  }, [fetchContacts]);
 
   const fetchContacts = async () => {
     try {

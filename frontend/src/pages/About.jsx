@@ -3,12 +3,6 @@ import { useNavigate } from 'react-router-dom';
 function About({ setIsAuthenticated }) {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    if (setIsAuthenticated) setIsAuthenticated(false);
-    navigate('/login', { replace: true });
-  };
-
   return (
     <div style={{
       minHeight: '100vh',
